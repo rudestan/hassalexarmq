@@ -1,10 +1,5 @@
 package alexakit
 
-import (
-	"encoding/json"
-	"fmt"
-)
-
 const (
 	version = "1.0"
 	OutputSpeechTypePlainText = "PlainText"
@@ -20,41 +15,23 @@ type OutputSpeech struct {
 	Text string `json:"text"`
 }
 
-type Response struct {
+type RespBody struct {
 	OutputSpeech OutputSpeech `json:"outputSpeech"`
 }
 
-type AlexaResponse struct {
+type Response struct {
 	Version string `json:"version"`
-	Response Response `json:"response"`
+	Response RespBody `json:"response"`
 }
 
-func NewPlainTextSpeechResponse(speechText string) AlexaResponse {
-	return AlexaResponse{
+func NewPlainTextSpeechResponse(speechText string) Response {
+	return Response{
 		Version:  version,
-		Response: Response{
+		Response: RespBody{
 			OutputSpeech: OutputSpeech{
 				Type: OutputSpeechTypePlainText,
 				Text: speechText,
 			},
 		},
 	}
-}
-
-func RawFailedResponse() string  {
-	return fmt.Sprintf(
-		`{"version": "%s", "outputSpeech": {"type":"%s", "text": "%s"}}`,
-		version,
-		OutputSpeechTypePlainText,
-		SpeechTextFailed)
-}
-
-func (r *AlexaResponse) ToJson() (string, error) {
-	content, err := json.Marshal(r)
-
-	if err != nil {
-		return "", err
-	}
-
-	return string(content), nil
 }
