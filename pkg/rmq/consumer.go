@@ -13,7 +13,7 @@ import (
 func (proc* Rmq) Consume(handler interface{}) {
 	conn, err := amqp.Dial(fmt.Sprintf("amqp://%s:%s@%s:%d/", proc.config.Login, proc.config.Password, proc.config.Host, proc.config.Port))
 
-	displayError(err, "failed to connect")
+	proc.displayError(err, "failed to connect")
 
 	defer func() {
 		err := conn.Close()
@@ -41,7 +41,7 @@ func (proc* Rmq) Consume(handler interface{}) {
 		false,
 		nil,
 	)
-	displayError(err, "failed to register a consumer")
+	proc.displayError(err, "failed to register a consumer")
 
 	consumer := make(chan bool)
 
@@ -59,7 +59,7 @@ func (proc* Rmq) Consume(handler interface{}) {
 		}
 	}()
 
-	log.Println("RMQ consumer started")
+	log.Printf("Consuming messages from %s:%d\n", proc.config.Host, proc.config.Port)
 
 	<-consumer
 }
@@ -67,7 +67,7 @@ func (proc* Rmq) Consume(handler interface{}) {
 func (proc *Rmq) openChannelAndQueue(conn *amqp.Connection) (*amqp.Channel, amqp.Queue) {
 	ch, err := conn.Channel()
 
-	displayError(err, "could not create a channel")
+	proc.displayError(err, "could not create a channel")
 
 	err = ch.ExchangeDeclare(
 		proc.config.Exchange,
@@ -79,7 +79,7 @@ func (proc *Rmq) openChannelAndQueue(conn *amqp.Connection) (*amqp.Channel, amqp
 		nil,
 	)
 
-	displayError(err, "can not declare the exchange")
+	proc.displayError(err, "can not declare the exchange")
 
 	q, err := ch.QueueDeclare(
 		proc.config.Queue,
@@ -89,7 +89,7 @@ func (proc *Rmq) openChannelAndQueue(conn *amqp.Connection) (*amqp.Channel, amqp
 		false,
 		nil,
 	)
-	displayError(err, "failed to declare the queue")
+	proc.displayError(err, "failed to declare the queue")
 
 	err = ch.QueueBind(
 		q.Name,
@@ -98,7 +98,7 @@ func (proc *Rmq) openChannelAndQueue(conn *amqp.Connection) (*amqp.Channel, amqp
 		false,
 		nil,
 	)
-	displayError(err, "failed to bind the queue")
+	proc.displayError(err, "failed to bind the queue")
 
 	return ch, q
 }

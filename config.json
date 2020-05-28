@@ -1,0 +1,25 @@
+{
+  "name": "Alexa RMQ Bridge",
+  "version": "1.0",
+  "slug": "alexa_rmq_bridge",
+  "description": "Alexa RMQ Bridge allows to receive Alexa requests via external RMQ server. This can be useful if it is not possible to expose the HASS ip to external world but Alexa integration is still wanted.",
+  "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],
+  "startup": "before",
+  "boot": "auto",
+  "homeassistant_api": true,
+  "options": {
+    "rmq_host":"",
+    "rmq_login":"guest",
+    "rmq_password":"guest"
+  },
+  "schema": {
+    "rmq_host":"str",
+    "rmq_port":"int?",
+    "rmq_login":"str",
+    "rmq_password":"str",
+    "rmq_exchange":"str?",
+    "rmq_queue":"str?",
+    "rmq_routing_key":"str?",
+    "rmq_message_expiration":"str?"
+  }
+}

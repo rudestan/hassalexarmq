@@ -52,13 +52,19 @@ type Intent struct {
 }
 
 type Slot struct {
+	ConfirmationStatus string `json:"confirmationStatus"`
 	Name  			  string `json:"name"`
 	Value 			  string `json:"value"`
 	Resolutions  Resolutions `json:"resolutions"`
+	Source			  string `json:"source"`
 }
 
 type Resolutions struct {
 	ResolutionPerAuthority []struct{
+		Authority string `json:"authority"`
+		Status struct{
+			Code string `json:"code"`
+		} `json:"status"`
 		Values []struct{
 			Value struct{
 				Name string `json:"name"`

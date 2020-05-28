@@ -1,6 +1,7 @@
 package rmq
 
 import (
+	"fmt"
 	"github.com/streadway/amqp"
 	"log"
 	"time"
@@ -8,6 +9,10 @@ import (
 
 func (proc *Rmq) Publish(payload string) error {
 	conn, err := proc.connect()
+
+	if err != nil {
+		return err
+	}
 
 	defer func() {
 		err = conn.Close()
@@ -28,7 +33,7 @@ func (proc *Rmq) publishToRmq(conn *amqp.Connection, jsonMessage string) error  
 	defer func() {
 		err = ch.Close()
 		if err != nil {
-			log.Println("failed to close the channel")
+			log.Println(fmt.Sprintf("failed to close the channel: %s", err))
 		}
 	}()
 
