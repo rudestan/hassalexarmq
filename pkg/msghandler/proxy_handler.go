@@ -22,7 +22,7 @@ func NewHandler() *Handler  {
 	}
 }
 
-// handle initializes AlexaRequest struct with all intents and slots received in json message payload.
+// Handle initializes AlexaRequest struct with all intents and slots received in json message payload.
 // Then it creates simplified filtered struct and performs execution with device control package.
 func (h *Handler) Handle(req string) {
 	log.Println("Request: " + req)
