@@ -32,12 +32,10 @@ func (proc *Rmq) connect() (*amqp.Connection, error)  {
 	return conn, nil
 }
 
-func (proc *Rmq) displayError(err error, msg string) {
-	if err != nil {
-		log.Fatalf("%s (%s:%d): %s",
+func (proc *Rmq) logError(err error, msg string) {
+		log.Println(fmt.Sprintf("%s (%s:%d): %s",
 			msg,
 			proc.config.Host,
 			proc.config.Port,
-			err)
-	}
+			err))
 }

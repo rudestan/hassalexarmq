@@ -8,6 +8,7 @@ export RMQ_EXCHANGE=$(bashio::config 'rmq_exchange')
 export RMQ_QUEUE=$(bashio::config 'rmq_queue')
 export RMQ_ROUTING_KEY=$(bashio::config 'rmq_routing_key')
 export RMQ_MSG_EXPIRATION=$(bashio::config 'rmq_message_expiration')
+export RETRY_INTERVAL=$(bashio::config 'retry_interval')
 
 bashio::log.info "Start Alexa RMQ Consumer"
 

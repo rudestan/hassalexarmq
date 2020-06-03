@@ -20,6 +20,7 @@
     "rmq_exchange":"str?",
     "rmq_queue":"str?",
     "rmq_routing_key":"str?",
-    "rmq_message_expiration":"str?"
+    "rmq_message_expiration":"str?",
+    "retry_interval":"int?"
   }
 }
